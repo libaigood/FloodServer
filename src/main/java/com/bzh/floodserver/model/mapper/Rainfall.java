@@ -9,7 +9,7 @@ public class Rainfall {
     private String drp;
     private String tmaa;
 
-    private String subscripttime;
+    private String subscripttime;//统计图时间
 
     public String getSubscripttime() {
         return subscripttime;

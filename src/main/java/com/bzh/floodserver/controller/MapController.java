@@ -53,6 +53,7 @@ public class MapController {
     public ResultMap Riverselect(String tmstart, String tmend, String stcd) {
         List<Rivertime> rivertimeList = riverService.selectRivertime(stcd, tmstart, tmend);
         River river = riverService.riverSelect(tmstart, tmend, stcd);
+        rivertimeList = timeHandler(rivertimeList, "getYmdhm", "setSubscripttime");
         Rivercourseall rivercourseall = new Rivercourseall(river, rivertimeList);
         return new ResultMap().success().message(null).data(rivercourseall);
     }
@@ -70,6 +71,7 @@ public class MapController {
     public ResultMap Reservoirselect(String stcd, String tmstart, String tmend) {
         Reservoir reservoir = riverService.reservoirService(stcd, tmstart, tmend);
         List<Reservoirtime> reservoirtimeList = riverService.selectReservoirtime(stcd, tmstart, tmend);
+        reservoirtimeList = timeHandler(reservoirtimeList, "getTm", "setSubscripttime");
         Reservoirall reservoirall = new Reservoirall(reservoir, reservoirtimeList);
         return new ResultMap().success().message(null).data(reservoirall);
     }
@@ -156,8 +158,6 @@ public class MapController {
             rainfall.setTmaa(dateFormat.format(rainfall.getTm()));
         }
         list = timeHandler(list, "getTm", "setSubscripttime");
-
-
         return new ResultMap().success().message(null).data(list);
     }
 

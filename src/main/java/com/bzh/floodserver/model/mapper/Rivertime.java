@@ -10,6 +10,16 @@ public class Rivertime {
     private double q;//流量
     private double zr;//水位值
 
+    private String subscripttime;//统计图时间
+
+    public String getSubscripttime() {
+        return subscripttime;
+    }
+
+    public void setSubscripttime(String subscripttime) {
+        this.subscripttime = subscripttime;
+    }
+
     public Rivertime() {
     }
 

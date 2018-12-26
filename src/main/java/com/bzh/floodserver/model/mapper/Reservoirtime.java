@@ -10,6 +10,16 @@ public class Reservoirtime {
     private double rz;//库上水位
     private double w;//蓄水量
 
+    private String subscripttime;//时间统计图
+
+    public String getSubscripttime() {
+        return subscripttime;
+    }
+
+    public void setSubscripttime(String subscripttime) {
+        this.subscripttime = subscripttime;
+    }
+
     public Reservoirtime(Date tm, double rz, double w) {
         this.tm = tm;
         this.rz = rz;
