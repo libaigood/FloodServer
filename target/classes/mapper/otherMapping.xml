@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<!-- 雨情信息 -->
+ 
+<mapper namespace="com.bzh.floodserver.mapper.OtherDao">
+
+	<!-- 站点 -->
+	<select id="allStcds" resultType="com.bzh.floodserver.model.sjappfu.BasicInformation">
+		select * from ST_STBPRP_B
+	</select>
+	
+	<!-- 政区 -->
+	<select id="allAddvcds" resultType="com.bzh.floodserver.model.sjappfu.DJ_AD">
+		select adcd, adnm from DJ_AD
+	</select>
+	
+	<!-- 水系 -->
+	<!-- <select id="allHnnm" resultType="com.sjappfu.entity.Rainfalls_one">
+	</select> -->
+</mapper>

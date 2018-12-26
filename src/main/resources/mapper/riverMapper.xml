@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 用户系统 -->
+<mapper namespace="com.bzh.floodserver.mapper.RiverMapper">
+
+	<select id="riverselect" resultType="com.bzh.floodserver.model.mapper.River">
+
+		select a.stcd,Convert(decimal(18,2),zr) z,Q,ymdhm from yy_data_wat a
+		inner join (select stcd, max(ymdhm) tm from yy_data_wat where STCD
+		in (select stcd from st_stbprp_b)and ymdhm>#{ymdhmA} and ymdhm &lt;=#{ymdhmB}  group by stcd) b on a.STCD = b.STCD and a.ymdhm = b.tm where A.STCD=#{stcd}
+	</select>
+	<select id="reservoirservice" resultType="com.bzh.floodserver.model.mapper.Reservoir">
+		select A.* from (select stcd,ymdhm tm,Convert(decimal(18,2),zr) rz,null[INQ],q [W] ,null [OTQ] from yy_data_wat where stcd in (select stcd from st_stbprp_b where  sttp like '%R%') ) A,
+		(select stcd, MAX(YMDHM) as TM from YY_Data_wat where stcd in (select stcd from st_stbprp_b where  STCD=#{stcd})
+		and YMDHM>#{ymdhmA}  and YMDHM &lt;=#{ymdhmB} group by STCD) B where A.STCD=B.STCD and A.TM=B.TM
+	</select>
+	<select id="rflowselect" resultType="com.bzh.floodserver.model.mapper.Rflow">
+		 select a.STCD,STNM,ADNM,dyp from (select STCD,STNM,ADNM from ST_STBPRP_B inner join DJ_AD on ST_STBPRP_B.ADDVCD = DJ_AD.ADCD where STTP = 'PP') a
+		 left join
+		 (select STCD,SUM(DRP) dyp from ST_PPTN_R where TM between #{tmstart} and #{tmend} group by STCD) b on b.STCD = a.STCD order by dyp desc ; ;
+	</select>
+
+	<select id="rlibraryselect" resultType="com.bzh.floodserver.model.mapper.Rlibrary">
+		 select a.STCD,STNM,ADNM,RZ,INQ,OTQ from (select STCD,STNM,ADNM from ST_STBPRP_B inner join DJ_AD on ST_STBPRP_B.ADDVCD = DJ_AD.ADCD where STTP = 'RR') a
+ 		left join
+ 		(select STCD,MAX(RZ) RZ,MAX(INQ) INQ,MAX(OTQ) OTQ from ST_RSVR_R where TM between #{tmstart} and #{tmend} group by STCD) b on b.STCD = a.STCD
+	</select>
+	<select id="ravenueselect" resultType="com.bzh.floodserver.model.mapper.Ravenue">
+		select a.STCD ,STNM,RVNM,Q,Z from (select stcd ,STNM, adnm,rvnm from ST_STBPRP_B inner join DJ_AD on ST_STBPRP_B.ADDVCD = DJ_AD.ADCD WHERE STTP='ZZ') a left join
+		(SELECT stcd, MAX(ST_RIVER_R.Z) as Z, MAX(ST_RIVER_R.Q) as Q FROM ST_RIVER_R WHERE TM BETWEEN #{tmstart} AND #{tmend} group by stcd) b on a.STCD = b.STCD
+	</select>
+	<select id="rainfallselect" resultType="com.bzh.floodserver.model.mapper.Rainfall">
+		select TM, DRP from dbo.ST_PPTN_R where STCD=#{stcd} and TM between #{tmstart} and #{tmend}
+	</select>
+
+	<select id="selectSt_rvfcch_bWrz" resultType="com.bzh.floodserver.model.mapper.St_rvfcch_b">
+  		SELECT isnull(wrz,0)wrz FROM ST_RVFCCH_B WHERE  stcd=#{stcd}
+	</select>
+
+	<select id="selectRivertime" resultType="com.bzh.floodserver.model.mapper.Rivertime">
+		select ymdhm,Q,ZR from 	yy_data_wat
+		where ymdhm>#{ymdhmstart} and ymdhm &lt;=#{ymdhmend}
+		and STCD=#{stcd} and DATATYPE='C'
+	</select>
+	<select id="selectReservoirtime" resultType="com.bzh.floodserver.model.mapper.Reservoirtime">
+		select TM,RZ,W from ST_RSVR_R where STCD=#{stcd} and TM between #{tmstart} and #{tmend}
+	</select>
+
+
+
+</mapper>
