@@ -67,11 +67,14 @@ public class WebSocketServiceImpl extends WebSocketServer implements WebSocketSe
 		switch (talk.getCode()) {
 			case "100": //首次连接
 				boolean isContains = webSocketMap.containsKey(talk.getSender());
+				System.out.println("状态"+isContains);
 				if(isContains){
 					WebSocket ws = webSocketMap.get(talk.getSender());
 					Talk tk = new Talk();
 					tk.setCode("455").setMessage("账号异常,请重新登录");
 					ws.send(gson.toJson(tk,Talk.class));
+					webSocketMap.remove(talk.getSender());
+					webSocketMapInverted.remove(ws);
 				}
 				webSocketMap.put(talk.getSender(), webSocket);
 				webSocketMapInverted.put(webSocket, talk.getSender());
