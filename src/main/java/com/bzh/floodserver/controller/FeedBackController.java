@@ -24,6 +24,7 @@ public class FeedBackController {
         List<Feedback> list=feedBackService.findAll();
         return  new ResultMap().success().message("success").data(list);
     }
+    //==========================
     @PostMapping("addFeedBack")
     public ResultMap addFeedBack(String contents,String uName){
         int count=feedBackService.addFeedBack(contents,new Date(),uName);
