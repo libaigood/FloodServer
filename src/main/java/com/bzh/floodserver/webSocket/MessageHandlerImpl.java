@@ -18,11 +18,8 @@ public class MessageHandlerImpl implements MessageHandler {
 
 	@Autowired
 	private UserService userService;
-
 	@Autowired
 	private WebSocketService webSocketService;
-
-
 	@Override
 	public void transferPush(Talk talk) {
 		if (webSocketService.getWebSocketMap().containsKey(talk.getReceiver())) {
