@@ -1,46 +1,49 @@
-<?xml version="1.0" encoding="UTF-8" ?>  
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
-		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
- <!-- 水情信息 -->
- 
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 水情信息 -->
+
 <mapper namespace="com.bzh.floodserver.mapper.WaterInfoDao">
 
-<!-- 河道水情 -->
+    <!-- 河道水情 -->
 
-	<!-- 河道_全部站点 -->
-	
-	<!-- 查询给定时间范围为内最新的一条8点钟的数据 -->
-	
-	<select id="river_all" resultType="com.bzh.floodserver.model.sjappfu.WaterInfo_river_all">
-		select t.stcd, t.tm, t.z, t.q, t.stnm, t.rvnm, t.wrz
-		from (select e.*,row_number() over (partition by stnm order by tm desc) rn 
-				from (select a.stcd, a.tm, a.z, a.q, b.stnm, b.rvnm,  c.wrz
-						from ST_RIVER_R a
-						
-						left join ST_STBPRP_B b on a.stcd = b.stcd
-						left join ST_RVFCCH_B c on a.stcd = c.stcd
-						left join ST_STSMTASK_B d on a.stcd = d.stcd
-						left join DJ_AD e on b.addvcd = e.adcd
-						
-						where a.tm &gt; #{stm} and a.tm &lt;= #{etm}
-						and b.sttp like '%z%'
-						and d.ZFL = 1 
-						
-						<if test="addvcd != null">
-		   				 and c.adcd= #{addvcd}
-						</if>
-					) e
-			) t
-		where rn=1
-	</select>
-	
-	
-	<!-- 河道_单个站点 -->
-	
-	<!-- 查询给定时间范围为内每天的8点钟的数据 -->
-	
-	<select id="river_one" resultType="com.bzh.floodserver.model.sjappfu.WaterInfo_river_one">
+    <!-- 河道_全部站点 -->
+
+    <!-- 查询给定时间范围为内最新的一条8点钟的数据 -->
+
+    <select id="river_all" resultType="com.bzh.floodserver.model.sjappfu.WaterInfo_river_all">
+        select t.stcd, t.tm, t.z, t.q, t.stnm, t.rvnm, t.wrz
+        from (select e.*,row_number() over (partition by stnm order by tm desc) rn
+        from (select a.stcd, a.tm, a.z, a.q, b.stnm, b.rvnm, c.wrz
+        from ST_RIVER_R a
+
+        left join ST_STBPRP_B b on a.stcd = b.stcd
+        left join ST_RVFCCH_B c on a.stcd = c.stcd
+        left join ST_STSMTASK_B d on a.stcd = d.stcd
+        left join DJ_AD e on b.addvcd = e.adcd
+
+        where a.tm &gt; #{stm} and a.tm &lt;= #{etm}
+        and b.sttp like '%z%'
+        and d.ZFL = 1
+
+        <if test="addvcd!=null">
+			and c.adcd in
+            <foreach collection="addvcd" index="index" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        ) e
+        ) t
+        where rn=1
+    </select>
+
+
+    <!-- 河道_单个站点 -->
+
+    <!-- 查询给定时间范围为内每天的8点钟的数据 -->
+
+    <select id="river_one" resultType="com.bzh.floodserver.model.sjappfu.WaterInfo_river_one">
 		select a.stcd, a.tm, a.z, a.q,  a.xsa, a.xsavv, a.xsmxv, a.flwchrcd, a.wptn, a.msqmt, a.msamt, a.msvmt,
 				b.stnm, b.rvnm, b.hnnm, b.bsnm, b.lgtd, b.lttd, b.stlc, b.addvcd, b.dtmnm, b.dtmel, b.dtpr, b.sttp, b.frgrd, 
 				b.esstym, b.bgfrym, b.atcunit, b.admauth, b.locality, b.stbk, b.stazt, b.dstrvm, b.drna, b.phcd, b.usfl, b.comments, b.moditime,  
@@ -60,9 +63,9 @@
 		and e.ZFL = 1
 		order by a.tm desc
 	</select>
-	
-	<!-- 河道站点基本信息（详细信息） -->
-	<select id="river_detailed" resultType="com.bzh.floodserver.model.sjappfu.WaterInfo_river_one">
+
+    <!-- 河道站点基本信息（详细信息） -->
+    <select id="river_detailed" resultType="com.bzh.floodserver.model.sjappfu.WaterInfo_river_one">
 		select b.stcd, a.tm, a.z, a.q,  a.xsa, a.xsavv, a.xsmxv, a.flwchrcd, a.wptn, a.msqmt, a.msamt, a.msvmt,
 				b.stnm, b.rvnm, b.hnnm, b.bsnm, b.lgtd, b.lttd, b.stlc, b.addvcd, b.dtmnm, b.dtmel, b.dtpr, b.sttp, b.frgrd, 
 				b.esstym, b.bgfrym, b.atcunit, b.admauth, b.locality, b.stbk, b.stazt, b.dstrvm, b.drna, b.phcd, b.usfl, b.comments, b.moditime,  
@@ -78,44 +81,47 @@
 
 		where b.stcd = #{stcd}
 	</select>
-	
-	
-<!-- 水库水情 -->	
 
-	<!-- 水库_全部站点 -->
-	
-	<!-- 查询给定时间范围为内最新的一条数据 -->
-	
-	<select id="reservoir_all" resultType="com.bzh.floodserver.model.sjappfu.WaterInfo_reservoir_all">
-		select t.stcd, t.stnm, t.adnm, t.tm, t.rz, t.fsltdz
-		from (select f.*,row_number() over (partition by stnm order by tm desc) rn 
-				from (select a.stcd, a.tm, a.rz, b.stnm, c.adnm,  d.fsltdz
-						from ST_RSVR_R a
-						
-						left join ST_STBPRP_B b on a.stcd = b.stcd
-						left join DJ_AD c on b.addvcd = c.adcd
-						left join ST_RSVRFSR_B d on a.stcd = d.stcd
-						left join ST_STSMTASK_B e on a.stcd = e.stcd
-						
-						where a.tm &gt; #{stm} and a.tm &lt;= #{etm}
-						and b.sttp like '%r%'
-						and e.ZFL = 1 
-						
-						<if test="addvcd != null">
-		   				 and c.adcd= #{addvcd}
-						</if>
-						
-						) f
-			) t
-		where rn=1
-	</select>
-	
-	
-	<!-- 水库_单个站点 -->
-	
-	<!-- 查询给定时间范围为内每天的8点钟的数据 -->
-	
-	<select id="reservoir_one" resultType="com.bzh.floodserver.model.sjappfu.WaterInfo_reservoir_one">
+
+    <!-- 水库水情 -->
+
+    <!-- 水库_全部站点 -->
+
+    <!-- 查询给定时间范围为内最新的一条数据 -->
+
+    <select id="reservoir_all" resultType="com.bzh.floodserver.model.sjappfu.WaterInfo_reservoir_all">
+        select t.stcd, t.stnm, t.adnm, t.tm, t.rz, t.fsltdz
+        from (select f.*,row_number() over (partition by stnm order by tm desc) rn
+        from (select a.stcd, a.tm, a.rz, b.stnm, c.adnm, d.fsltdz
+        from ST_RSVR_R a
+
+        left join ST_STBPRP_B b on a.stcd = b.stcd
+        left join DJ_AD c on b.addvcd = c.adcd
+        left join ST_RSVRFSR_B d on a.stcd = d.stcd
+        left join ST_STSMTASK_B e on a.stcd = e.stcd
+
+        where a.tm &gt; #{stm} and a.tm &lt;= #{etm}
+        and b.sttp like '%r%'
+        and e.ZFL = 1
+
+		<if test="addvcd!=null">
+			and c.adcd in
+			<foreach collection="addvcd" index="index" item="item" open="(" close=")" separator=",">
+				#{item}
+			</foreach>
+		</if>
+
+        ) f
+        ) t
+        where rn=1
+    </select>
+
+
+    <!-- 水库_单个站点 -->
+
+    <!-- 查询给定时间范围为内每天的8点钟的数据 -->
+
+    <select id="reservoir_one" resultType="com.bzh.floodserver.model.sjappfu.WaterInfo_reservoir_one">
 		select a.stcd, a.tm, a.rz, a.inq, a.w, a.blrz, a.otq, a.rwchrcd, a.rwptn, a.inqdr, a.msqmt,
 				b.stnm, b.rvnm, b.hnnm, b.bsnm, b.lgtd, b.lttd, b.stlc, b.addvcd, b.dtmnm, b.dtmel, b.dtpr, b.sttp, b.frgrd, 
 				b.esstym, b.bgfrym, b.atcunit, b.admauth, b.locality, b.stbk, b.stazt, b.dstrvm, b.drna, b.phcd, b.usfl, b.comments, b.moditime,  
@@ -135,11 +141,11 @@
 		and e.ZFL = 1
 		order by a.tm desc
 	</select>
-	
-	
-	<!-- 水库站点基本信息（详细信息） -->
-	
-	<select id="reservoir_detailed" resultType="com.bzh.floodserver.model.sjappfu.WaterInfo_reservoir_one">
+
+
+    <!-- 水库站点基本信息（详细信息） -->
+
+    <select id="reservoir_detailed" resultType="com.bzh.floodserver.model.sjappfu.WaterInfo_reservoir_one">
 		select b.stcd, a.tm, a.rz, a.inq, a.w, a.blrz, a.otq, a.rwchrcd, a.rwptn, a.inqdr, a.msqmt,
 				b.stnm, b.rvnm, b.hnnm, b.bsnm, b.lgtd, b.lttd, b.stlc, b.addvcd, b.dtmnm, b.dtmel, b.dtpr, b.sttp, b.frgrd, 
 				b.esstym, b.bgfrym, b.atcunit, b.admauth, b.locality, b.stbk, b.stazt, b.dstrvm, b.drna, b.phcd, b.usfl, b.comments, b.moditime,  
@@ -157,5 +163,5 @@
 
 		where b.stcd = #{stcd}
 	</select>
-	
+
 </mapper>

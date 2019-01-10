@@ -48,7 +48,18 @@ public class FloodAbstractImpl implements FloodAbstractService {
 		return map;
 
 	}
-
+	//将字符串拆封，变成数组
+	private List<String> stringList(String addvcd){
+		List<String> list=new ArrayList<>();
+		if (addvcd!=null && !addvcd.equals("")){
+			String[] sourceStrArray = addvcd.split(",");
+			for (int i = 0; i < sourceStrArray.length; i++) {
+				System.out.println(sourceStrArray[i]);
+				list.add(sourceStrArray[i]);
+			}
+		}
+		return list;
+	}
 	public List<Rainfalls_all> floodAbstract_rain_all(String stm,String etm, int[] nums, String addvcd)throws NoDataException{
 		List<Rainfalls_all> list = rainInfoService.rainfalls_all(stm, etm, addvcd);
 		if(list.size()==0) {

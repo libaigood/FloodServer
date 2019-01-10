@@ -1,106 +1,63 @@
-<?xml version="1.0" encoding="UTF-8" ?>  
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
-		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <!-- 雨情信息 -->
- 
+
 <mapper namespace="com.bzh.floodserver.mapper.RainInfoDao">
 
 
-<!-- 雨情信息 -->
+    <select id="select" resultType="com.bzh.floodserver.model.sjappfu.Rainfalls_all">
+        select *from DJ_AD
+        <if test="addvcd!=null">
+			where ADCD in
+            <foreach collection="addvcd" index="index" item="item" open="(" close=")" separator=",">
+				 #{item}
+            </foreach>
+        </if>
+    </select>
 
-	<!-- 降雨信息_所有站 -->
-	
-	<select id="rainfalls_all" resultType="com.bzh.floodserver.model.sjappfu.Rainfalls_all">
-		select a.stcd, sum(a.drp) drp, b.stnm, c.adcd, c.adnm
-		from ST_PPTN_R a
-		
-		left join ST_STBPRP_B b on a.stcd = b.stcd
-		
-		left join DJ_AD c on b.addvcd = c.adcd
-		
-		left join ST_STSMTASK_B d on a.stcd = d.stcd
-		
-		where a.tm &gt; #{stm}
-		and a.tm &lt;= #{etm}
-		and a.intv = 1
-		and a.drp &gt; 0
-		and b.sttp like '%p%'
-		and d.pfl = 1
-		
+
+    <!-- 雨情信息 -->
+
+    <!-- 降雨信息_所有站 -->
+
+    <select id="rainfalls_all" resultType="com.bzh.floodserver.model.sjappfu.Rainfalls_all">
+        select a.stcd, sum(a.drp) drp, b.stnm, c.adcd, c.adnm
+        from ST_PPTN_R a
+
+        left join ST_STBPRP_B b on a.stcd = b.stcd
+
+        left join DJ_AD c on b.addvcd = c.adcd
+
+        left join ST_STSMTASK_B d on a.stcd = d.stcd
+
+        where a.tm &gt; #{stm}
+        and a.tm &lt;= #{etm}
+        and a.intv = 1
+        and a.drp &gt; 0
+        and b.sttp like '%p%'
+        and d.pfl = 1
+
 		<if test="addvcd != null">
-		    and c.adcd= #{addvcd}
+			and c.adcd in
+			<foreach collection="addvcd" index="index" item="item" open="(" close=")" separator=",">
+				#{item}
+			</foreach>
 		</if>
-		
-<!-- 		and c.adcd in(
-			<foreach collection="addvcds" item="addvcd" index="index" separator="," >  
-		        #{addvcd,jdbcType=INTEGER} 
-		    </foreach>
-		) -->
 		group by a.stcd, b.stnm, c.adcd, c.adnm
-	</select>
-	
-	<!-- 降雨信息_单个站 -->
-	
-	<select id="rainfalls_one" resultType="com.bzh.floodserver.model.sjappfu.Rainfalls_one">
-		
-		select a.stcd, a.tm, a.drp, 
-				b.stnm, b.rvnm, b.hnnm, b.bsnm, b.lgtd, b.lttd, b.stlc, b.addvcd, b.dtmnm, b.dtmel, b.dtpr, b.sttp, b.frgrd, 
-				b.esstym, b.bgfrym, b.atcunit, b.admauth, b.locality, b.stbk, b.stazt, b.dstrvm, b.drna, b.phcd, b.usfl, b.comments, b.moditime,  
-				c.adcd, c.adnm
-		from ST_PPTN_R a
-		
-		left join ST_STBPRP_B b on a.stcd = b.stcd
-		
-		left join DJ_AD c on b.addvcd = c.adcd
-		
-		left join ST_STSMTASK_B d on a.stcd = d.stcd
-		
-		where a.stcd = #{stcd}
-		and a.tm &gt; #{stm}
-		and a.tm &lt;= #{etm}
-		and a.intv = 1
-		and a.drp &gt; 0
-		and a.drp is not null
-		and b.sttp like '%p%'
-		and d.pfl = 1
-		
-		order by a.tm
-	</select>
-	
-	
-<!-- 雨强信息 -->
+        <!-- 		and c.adcd in(
+                    <foreach collection="addvcds" item="addvcd" index="index" separator="," >
+                        #{addvcd,jdbcType=INTEGER}
+                    </foreach>
+                ) -->
 
-	<!-- 雨强信息_所有站 -->
-	
-	<select id="rainIntensity_all" resultType="com.bzh.floodserver.model.sjappfu.RainIntensity_all">
-		select a.stcd, a.drp, a.tm, b.stnm, c.adcd, c.adnm
-		from ST_PPTN_R a
+    </select>
+
+    <!-- 降雨信息_单个站 -->
+
+    <select id="rainfalls_one" resultType="com.bzh.floodserver.model.sjappfu.Rainfalls_one">
 		
-		left join ST_STBPRP_B b on a.stcd = b.stcd
-		
-		left join DJ_AD c on b.addvcd = c.adcd
-		
-		left join ST_STSMTASK_B d on a.stcd = d.stcd
-		
-		where a.tm &gt; #{stm}
-		and a.tm &lt;= #{etm}
-		and a.intv = 1
-		and a.drp &gt; 0
-		and a.drp is not null
-		and b.sttp like '%p%'
-		and d.pfl = 1
-		
-		<if test="addvcd != null">
-		    and c.adcd= #{addvcd}
-		</if>
-		
-		order by a.stcd, a.tm
-	</select>
-	
-	<!-- 雨强信息_单个站 -->
-	
-	<select id="rainIntensity_one" resultType="com.bzh.floodserver.model.sjappfu.RainIntensity_one">
 		select a.stcd, a.tm, a.drp, 
 				b.stnm, b.rvnm, b.hnnm, b.bsnm, b.lgtd, b.lttd, b.stlc, b.addvcd, b.dtmnm, b.dtmel, b.dtpr, b.sttp, b.frgrd, 
 				b.esstym, b.bgfrym, b.atcunit, b.admauth, b.locality, b.stbk, b.stazt, b.dstrvm, b.drna, b.phcd, b.usfl, b.comments, b.moditime,  
@@ -124,9 +81,69 @@
 		
 		order by a.tm
 	</select>
-	
-	<!-- 区域降雨统计 -->
-	<select id="regionalRainfall" resultType="com.bzh.floodserver.model.sjappfu.RegionalRainfall">
+
+
+    <!-- 雨强信息 -->
+
+    <!-- 雨强信息_所有站 -->
+
+    <select id="rainIntensity_all" resultType="com.bzh.floodserver.model.sjappfu.RainIntensity_all">
+        select a.stcd, a.drp, a.tm, b.stnm, c.adcd, c.adnm
+        from ST_PPTN_R a
+
+        left join ST_STBPRP_B b on a.stcd = b.stcd
+
+        left join DJ_AD c on b.addvcd = c.adcd
+
+        left join ST_STSMTASK_B d on a.stcd = d.stcd
+
+        where a.tm &gt; #{stm}
+        and a.tm &lt;= #{etm}
+        and a.intv = 1
+        and a.drp &gt; 0
+        and a.drp is not null
+        and b.sttp like '%p%'
+        and d.pfl = 1
+
+		<if test="addvcd!=null">
+			and c.adcd in
+			<foreach collection="addvcd" index="index" item="item" open="(" close=")" separator=",">
+				#{item}
+			</foreach>
+		</if>
+
+        order by a.stcd, a.tm
+    </select>
+
+    <!-- 雨强信息_单个站 -->
+
+    <select id="rainIntensity_one" resultType="com.bzh.floodserver.model.sjappfu.RainIntensity_one">
+		select a.stcd, a.tm, a.drp, 
+				b.stnm, b.rvnm, b.hnnm, b.bsnm, b.lgtd, b.lttd, b.stlc, b.addvcd, b.dtmnm, b.dtmel, b.dtpr, b.sttp, b.frgrd, 
+				b.esstym, b.bgfrym, b.atcunit, b.admauth, b.locality, b.stbk, b.stazt, b.dstrvm, b.drna, b.phcd, b.usfl, b.comments, b.moditime,  
+				c.adcd, c.adnm
+		from ST_PPTN_R a
+		
+		left join ST_STBPRP_B b on a.stcd = b.stcd
+		
+		left join DJ_AD c on b.addvcd = c.adcd
+		
+		left join ST_STSMTASK_B d on a.stcd = d.stcd
+		
+		where a.stcd = #{stcd}
+		and a.tm &gt; #{stm}
+		and a.tm &lt;= #{etm}
+		and a.intv = 1
+		and a.drp &gt; 0
+		and a.drp is not null
+		and b.sttp like '%p%'
+		and d.pfl = 1
+		
+		order by a.tm
+	</select>
+
+    <!-- 区域降雨统计 -->
+    <select id="regionalRainfall" resultType="com.bzh.floodserver.model.sjappfu.RegionalRainfall">
 		select a.stcd, sum(a.drp) drp, b.stnm, c.adcd, c.adnm
 		from ST_PPTN_R a
 		
@@ -146,13 +163,13 @@
 		
 		order by adcd
 	</select>
-	
-	<select id="findadcd" resultType="com.bzh.floodserver.model.sjappfu.RegionalRainfall">
+
+    <select id="findadcd" resultType="com.bzh.floodserver.model.sjappfu.RegionalRainfall">
 		select adcd, adnm from DJ_AD order by adcd
 	</select>
-	
-<!-- 雨量站点基本信息（详细信息） -->
-	<select id="rain_detailed" resultType="com.bzh.floodserver.model.sjappfu.Rainfalls_one">
+
+    <!-- 雨量站点基本信息（详细信息） -->
+    <select id="rain_detailed" resultType="com.bzh.floodserver.model.sjappfu.Rainfalls_one">
 		
 		select  a.stcd, a.stnm, a.rvnm, a.hnnm, a.bsnm, a.lgtd, a.lttd, a.stlc, a.addvcd, a.dtmnm, a.dtmel, a.dtpr, a.sttp, a.frgrd, 
 				a.esstym, a.bgfrym, a.atcunit, a.admauth, a.locality, a.stbk, a.stazt, a.dstrvm, a.drna, a.phcd, a.usfl, a.comments, a.moditime,  

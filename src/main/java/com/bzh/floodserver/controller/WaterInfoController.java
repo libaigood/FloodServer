@@ -25,7 +25,6 @@ import java.util.List;
 @Controller
 @RequestMapping("waterInfo")
 public class WaterInfoController {
-	
 	@Resource
     WaterInfoService waterInfoService;
 	

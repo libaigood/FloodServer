@@ -3,6 +3,7 @@ package com.bzh.floodserver.service;
 
 
 import com.bzh.floodserver.model.sjappfu.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Map;
  * 雨情信息
  * */
 public interface RainInfoService {
+	List<Rainfalls_all> select(List<String> addvcd);
 	//雨量信息
 	public List<Rainfalls_all> rainfalls_all(String stm, String etm, String addvcd);
 	public List<Rainfalls_one> rainfalls_one(String stcd, String stm, String etm, int timelength);

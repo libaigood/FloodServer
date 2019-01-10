@@ -16,14 +16,14 @@ import java.util.List;
 public interface WaterInfoDao {
 
 	//河道信息
-	public List<WaterInfo_river_all> river_all(@Param("stm") String stm, @Param("etm") String etm, @Param("addvcd") String addvcd);
+	public List<WaterInfo_river_all> river_all(@Param("stm") String stm, @Param("etm") String etm, @Param("addvcd") List<String> addvcd);
 
 	public List<WaterInfo_river_one> river_one(@Param("stcd") String stcd, @Param("stm") String stm, @Param("etm") String etm);
 
 	public WaterInfo_river_one river_detailed(@Param("stcd") String stcd, @Param("stm") String stm);
 
 	//水库信息
-	public List<WaterInfo_reservoir_all> reservoir_all(@Param("stm") String stm, @Param("etm") String etm, @Param("addvcd") String addvcd);
+	public List<WaterInfo_reservoir_all> reservoir_all(@Param("stm") String stm, @Param("etm") String etm, @Param("addvcd") List<String> addvcd);
 
 	public List<WaterInfo_reservoir_one> reservoir_one(@Param("stcd") String stcd, @Param("stm") String stm, @Param("etm") String etm);
 

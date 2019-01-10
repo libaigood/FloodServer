@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,11 +20,22 @@ public class WaterInfoServiceImpl implements WaterInfoService {
 
 	@Resource
 	private WaterInfoDao waterInfoDao;
-	
-
+//将字符串拆封，变成数组
+	private List<String> stringList(String addvcd) {
+		if (addvcd == null) {
+			return null;
+		}
+		List<String> list = new ArrayList<>();
+		String[] sourceStrArray = addvcd.split(",");
+		for (int i = 0; i < sourceStrArray.length; i++) {
+			System.out.println(sourceStrArray[i]);
+			list.add(sourceStrArray[i]);
+		}
+		return list;
+	}
 	//河道信息
 	public List<WaterInfo_river_all> river_all(String stm, String etm, String addvcd) throws NoDataException{
-		return waterInfoDao.river_all(stm, etm, addvcd);
+		return waterInfoDao.river_all(stm, etm, stringList(addvcd));
 	}
 	public List<WaterInfo_river_one> river_one(String stcd, String stm, String etm)throws NoDataException{
 		List<WaterInfo_river_one> list = waterInfoDao.river_one(stcd, stm, etm);
@@ -74,7 +86,7 @@ public class WaterInfoServiceImpl implements WaterInfoService {
 
 	//水库信息
 	public List<WaterInfo_reservoir_all> reservoir_all( String stm, String etm, String addvcd) throws NoDataException{
-		return waterInfoDao.reservoir_all(stm, etm, addvcd);
+		return waterInfoDao.reservoir_all(stm, etm, stringList(addvcd));
 	}
 	public List<WaterInfo_reservoir_one> reservoir_one( String stcd, String stm, String etm)throws NoDataException{
 		List<WaterInfo_reservoir_one> list = waterInfoDao.reservoir_one(stcd, stm, etm);
