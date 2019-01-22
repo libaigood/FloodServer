@@ -35,14 +35,14 @@ public class BasicInformation implements Serializable{
 	public String phcd;
 	public String usfl;
 	public String comments;
-	public Date moditime;
+	public String moditime;
 	public BasicInformation() {
 		super();
 	}
 	public BasicInformation(String stcd, String stnm, String rvnm, String hnnm, String bsnm, double lgtd, double lttd,
 			String stlc, String addvcd, String dtmnm, double dtmel, double dtpr, String sttp, String frgrd,
 			String esstym, String bgfrym, String atcunit, String admauth, String locality, String stbk, double stazt,
-			double dstrvm, double drna, String phcd, String usfl, String comments, Date moditime) {
+			double dstrvm, double drna, String phcd, String usfl, String comments, String moditime) {
 		super();
 		this.stcd = stcd;
 		this.stnm = stnm;
@@ -403,10 +403,10 @@ public class BasicInformation implements Serializable{
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
-	public Date getModitime() {
+	public String getModitime() {
 		return moditime;
 	}
-	public void setModitime(Date moditime) {
+	public void setModitime(String moditime) {
 		this.moditime = moditime;
 	}
 	public static long getSerialversionuid() {

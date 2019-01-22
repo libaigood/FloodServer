@@ -9,6 +9,7 @@ import java.util.Date;
 public class WaterInfo_river_one extends BasicInformation implements Serializable{
 
 	private static final long serialVersionUID = 1463531623752490770L;
+	private String subscripttime;//统计图时间
 	//ST_RIVER_R
 	private String stcd;
 	private Date tm;
@@ -66,7 +67,7 @@ public class WaterInfo_river_one extends BasicInformation implements Serializabl
 	public WaterInfo_river_one(String stcd, String stnm, String rvnm, String hnnm, String bsnm, double lgtd,
 			double lttd, String stlc, String addvcd, String dtmnm, double dtmel, double dtpr, String sttp, String frgrd,
 			String esstym, String bgfrym, String atcunit, String admauth, String locality, String stbk, double stazt,
-			double dstrvm, double drna, String phcd, String usfl, String comments, Date moditime) {
+			double dstrvm, double drna, String phcd, String usfl, String comments, String moditime) {
 		super(stcd, stnm, rvnm, hnnm, bsnm, lgtd, lttd, stlc, addvcd, dtmnm, dtmel, dtpr, sttp, frgrd, esstym, bgfrym, atcunit,
 				admauth, locality, stbk, stazt, dstrvm, drna, phcd, usfl, comments, moditime);
 	}
@@ -678,5 +679,12 @@ public class WaterInfo_river_one extends BasicInformation implements Serializabl
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
+	public String getSubscripttime() {
+		return subscripttime;
+	}
+
+	public void setSubscripttime(String subscripttime) {
+		this.subscripttime = subscripttime;
+	}
 }

@@ -28,7 +28,7 @@
         and d.ZFL = 1
 
         <if test="addvcd!=null">
-			and c.adcd in
+			and e.adcd in
             <foreach collection="addvcd" index="index" item="item" open="(" close=")" separator=",">
                 #{item}
             </foreach>
@@ -127,9 +127,8 @@
 				b.esstym, b.bgfrym, b.atcunit, b.admauth, b.locality, b.stbk, b.stazt, b.dstrvm, b.drna, b.phcd, b.usfl, b.comments, b.moditime,  
 				c.adcd, c.adnm,
 				d.bgmd, d.edmd, d.fsltdz, d.fsltdw, d.fstp
-
 		from ST_RSVR_R a
-		
+
 		left join ST_STBPRP_B b on a.stcd = b.stcd
 		left join DJ_AD c on b.addvcd = c.adcd
 		left join ST_RSVRFSR_B d on a.stcd = d.stcd

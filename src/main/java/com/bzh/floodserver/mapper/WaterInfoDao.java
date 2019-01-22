@@ -27,5 +27,5 @@ public interface WaterInfoDao {
 
 	public List<WaterInfo_reservoir_one> reservoir_one(@Param("stcd") String stcd, @Param("stm") String stm, @Param("etm") String etm);
 
-	public WaterInfo_reservoir_one reservoir_detailed(@Param("stcd") String stcd, @Param("stm") String stm);
+	public List<WaterInfo_reservoir_one> reservoir_detailed(@Param("stcd") String stcd, @Param("stm") String stm);
 }

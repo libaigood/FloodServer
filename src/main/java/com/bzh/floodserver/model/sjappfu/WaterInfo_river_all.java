@@ -20,6 +20,7 @@ public class WaterInfo_river_all implements Serializable{
 	private double wrz;
 	private double cjjsw;//超警戒水位=q-wrz
 	private String sts;
+
 	public WaterInfo_river_all() {
 		super();
 	}

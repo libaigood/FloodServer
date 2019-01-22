@@ -20,6 +20,16 @@ public class WaterInfo_reservoir_all implements Serializable{
 	private double fsltdz;
 	private double cxxsw;//超汛限水位 = rz - fsltdz
 	private String sts;
+	private String subscripttime;//统计图时间
+
+	public String getSubscripttime() {
+		return subscripttime;
+	}
+
+	public void setSubscripttime(String subscripttime) {
+		this.subscripttime = subscripttime;
+	}
+
 	public WaterInfo_reservoir_all() {
 		super();
 		// TODO Auto-generated constructor stub

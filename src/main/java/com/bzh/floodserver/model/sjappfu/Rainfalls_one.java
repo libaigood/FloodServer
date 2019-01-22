@@ -23,7 +23,7 @@ public class Rainfalls_one extends BasicInformation implements Serializable{
 	public Rainfalls_one(String stcd, String stnm, String rvnm, String hnnm, String bsnm, double lgtd, double lttd,
 			String stlc, String addvcd, String dtmnm, double dtmel, double dtpr, String sttp, String frgrd,
 			String esstym, String bgfrym, String atcunit, String admauth, String locality, String stbk, double stazt,
-			double dstrvm, double drna, String phcd, String usfl, String comments, Date moditime) {
+			double dstrvm, double drna, String phcd, String usfl, String comments, String moditime) {
 		super(stcd, stnm, rvnm, hnnm, bsnm, lgtd, lttd, stlc, addvcd, dtmnm, dtmel, dtpr, sttp, frgrd, esstym, bgfrym, atcunit,
 				admauth, locality, stbk, stazt, dstrvm, drna, phcd, usfl, comments, moditime);
 	}
