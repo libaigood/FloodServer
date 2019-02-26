@@ -29,7 +29,7 @@ public class WebSocketServiceImpl extends WebSocketServer implements WebSocketSe
 	private static Gson gson;
 
 	public WebSocketServiceImpl() throws UnknownHostException {
-		super(new InetSocketAddress(8080));
+		super(new InetSocketAddress(5302));
 	}
 
 	public WebSocketServiceImpl(InetSocketAddress address) {
