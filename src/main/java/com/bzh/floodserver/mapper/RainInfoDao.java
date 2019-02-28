@@ -19,7 +19,7 @@ public interface RainInfoDao {
 	public List<Rainfalls_all> rainfalls_all(@Param("stm") String stm, @Param("etm") String etm, @Param("addvcd") List<String> addvcd);
 	public List<Rainfalls_one> rainfalls_one(@Param("stcd") String stcd, @Param("stm") String stm, @Param("etm") String etm);
 	//雨强信息
-	public List<RainIntensity_all> rainIntensity_all(@Param("stm") String stm, @Param("etm") String etm, @Param("addvcd") List<String> addvcd);
+	public List<RainIntensity_all> rainIntensity_all(@Param("stm") String stm,  @Param("addvcd") List<String> addvcd);
 	public List<RainIntensity_one> rainIntensity_one(@Param("stcd") String stcd, @Param("stm") String stm, @Param("etm") String etm);
 	//区域降雨统计
 	public List<RegionalRainfall> regionalRainfall(@Param("stm") String stm, @Param("etm") String etm);

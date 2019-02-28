@@ -13,7 +13,7 @@
 	
 	<!-- 政区 -->
 	<select id="allAddvcds" resultType="com.bzh.floodserver.model.sjappfu.DJ_AD">
-		select adcd, adnm from DJ_AD
+		SELECT a.*,ISNULL(ax.ISSHOW,0) as ISSHOW FROM dbo.DJ_AD a INNER JOIN (SELECT DISTINCT b.ADDVCD,1 AS ISSHOW FROM dbo.ST_STBPRP_B b left join DJ_EXP c on b.STCD=c.stcd where c.dq=31) AS ax ON a.ADCD=ax.ADDVCD
 	</select>
 	
 	<!-- 水系 -->

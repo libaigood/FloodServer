@@ -94,8 +94,8 @@ public class RainInfoServiceImpl implements RainInfoService {
 
     //雨强信息
     @SuppressWarnings("deprecation")
-    public Map<String, List<RainIntensity_all>> rainIntensity_all(String stm, String etm, String addvcd) throws NoDataException {
-        List<RainIntensity_all> list = rainInfoDao.rainIntensity_all(stm, etm, stringList(addvcd));
+    public Map<String, List<RainIntensity_all>> rainIntensity_all(String stm, String addvcd) throws NoDataException {
+        List<RainIntensity_all> list = rainInfoDao.rainIntensity_all(stm,  stringList(addvcd));
 		
 		/*if(list.size() == 0) {
 			throw new NoDataException("没有数据!");

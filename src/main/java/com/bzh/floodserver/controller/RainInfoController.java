@@ -85,8 +85,8 @@ public class RainInfoController {
 
 	@ResponseBody
 	@RequestMapping("rainIntensity_all")
-	public Object rainIntensity_all(String stm, String etm, String addvcd) {
-		return new JsonResult(rainInfoService.rainIntensity_all(stm, etm, addvcd));
+	public Object rainIntensity_all(String stm, String addvcd) {
+		return new JsonResult(rainInfoService.rainIntensity_all(stm, addvcd));
 	}
 
 	@ResponseBody

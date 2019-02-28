@@ -97,8 +97,7 @@
 
         left join ST_STSMTASK_B d on a.stcd = d.stcd
 
-        where a.tm &gt; #{stm}
-        and a.tm &lt;= #{etm}
+        where a.tm= #{stm}
         and a.intv = 1
         and a.drp &gt; 0
         and a.drp is not null
@@ -123,7 +122,7 @@
 				b.esstym, b.bgfrym, b.atcunit, b.admauth, b.locality, b.stbk, b.stazt, b.dstrvm, b.drna, b.phcd, b.usfl, b.comments, b.moditime,  
 				c.adcd, c.adnm
 		from ST_PPTN_R a
-		
+
 		left join ST_STBPRP_B b on a.stcd = b.stcd
 		
 		left join DJ_AD c on b.addvcd = c.adcd

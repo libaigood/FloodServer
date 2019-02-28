@@ -4,6 +4,7 @@ import com.bzh.floodserver.core.singleLogin.LoginHandler;
 import com.bzh.floodserver.service.serviceImpl.UserDetailImpl;
 import com.bzh.floodserver.utils.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -52,7 +53,8 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
 	 * Spring Security 的核心操作服务类
 	 * 在当前类中将使用 UserDetailsService 来获取 userDetails 对象
 	 */
-	@Resource
+	@Qualifier("userDetailServiceImpl")
+	@Autowired
 	private UserDetailsService userDetailsService;
 
 	@Override
