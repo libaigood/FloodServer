@@ -1,7 +1,9 @@
 package com.bzh.floodserver.service;
 
-
-import com.bzh.floodserver.model.sjappfu.*;
+import com.bzh.floodserver.model.sjappfu.WaterInfo_reservoir_all;
+import com.bzh.floodserver.model.sjappfu.WaterInfo_reservoir_one;
+import com.bzh.floodserver.model.sjappfu.WaterInfo_river_all;
+import com.bzh.floodserver.model.sjappfu.WaterInfo_river_one;
 
 import java.util.List;
 
@@ -10,7 +12,7 @@ import java.util.List;
  * */
 public interface WaterInfoService {
 	//河道信息
-	public List<WaterInfo_river_all> river_all(String stm, String etm, String addvcd); 
+	public List<WaterInfo_river_all> river_all(String stm, String etm, String addvcd);
 	public List<WaterInfo_river_one> river_one(String stcd, String stm, String etm);
 	public WaterInfo_river_one river_detailed(String stcd); 
 	

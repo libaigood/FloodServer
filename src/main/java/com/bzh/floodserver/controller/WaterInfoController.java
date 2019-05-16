@@ -1,23 +1,21 @@
 package com.bzh.floodserver.controller;
 
-import javax.annotation.Resource;
-
 import com.bzh.floodserver.model.sjappfu.WaterInfo_reservoir_all;
 import com.bzh.floodserver.model.sjappfu.WaterInfo_reservoir_one;
 import com.bzh.floodserver.model.sjappfu.WaterInfo_river_all;
 import com.bzh.floodserver.model.sjappfu.WaterInfo_river_one;
-import com.bzh.floodserver.service.NoDataException;
 import com.bzh.floodserver.service.WaterInfoService;
 import com.bzh.floodserver.utils.JsonResult;
+import com.bzh.floodserver.utils.NoDataException;
 import com.bzh.floodserver.utils.ResultMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

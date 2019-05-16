@@ -1,11 +1,9 @@
 package com.bzh.floodserver.controller;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.bzh.floodserver.model.Stcd;
 import com.bzh.floodserver.model.mapper.*;
 import com.bzh.floodserver.service.RiverService;
 import com.bzh.floodserver.service.StcdService;
-import com.bzh.floodserver.utils.JsonResult;
 import com.bzh.floodserver.utils.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,8 +15,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 

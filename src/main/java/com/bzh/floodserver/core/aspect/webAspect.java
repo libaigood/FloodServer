@@ -23,7 +23,7 @@ public class webAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(webAspect.class);
 
-    @Pointcut("execution(* com.bzh.*.controller.*.*(..))")
+    @Pointcut("execution(* com.bzh.floodserver.controller.*.*(..))")
     public void webPointCut() {
     }
 

@@ -1,17 +1,14 @@
 package com.bzh.floodserver.controller;
 
-import javax.annotation.Resource;
-
-import com.bzh.floodserver.mapper.RainInfoDao;
 import com.bzh.floodserver.model.sjappfu.Rainfalls_all;
-import com.bzh.floodserver.service.NoDataException;
 import com.bzh.floodserver.service.RainInfoService;
 import com.bzh.floodserver.utils.JsonResult;
+import com.bzh.floodserver.utils.NoDataException;
 import com.bzh.floodserver.utils.ResultMap;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -3,7 +3,7 @@ package com.bzh.floodserver.service.serviceImpl;
 
 import com.bzh.floodserver.model.sjappfu.*;
 import com.bzh.floodserver.service.*;
-
+import com.bzh.floodserver.utils.NoDataException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

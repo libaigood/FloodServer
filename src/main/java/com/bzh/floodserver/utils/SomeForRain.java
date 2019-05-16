@@ -1,4 +1,4 @@
-package com.bzh.floodserver.service;
+package com.bzh.floodserver.utils;
 
 import java.util.Calendar;
 import java.util.Date;

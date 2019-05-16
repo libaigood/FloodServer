@@ -1,111 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 用户系统 -->
 <mapper namespace="com.bzh.floodserver.mapper.UserMapper">
-
-	<resultMap id="userinfo" type="com.bzh.floodserver.model.User">
-		<result column="id" property="id"/>
-		<result column="username" property="username"/>
-		<result column="password" property="password"/>
-		<result column="last_password_change" property="lastPasswordChange"/>
-		<result column="role" property="authorities"/>
-		<result column="enable" property="enable"/>
-	</resultMap>
-
-	<delete id="deleteFriend">
-		delete from friends
-		where
-			USER_ID = (SELECT ID FROM user WHERE USERNAME = #{username})
-		and
-			FRIEND_ID = (SELECT ID FROM user WHERE USERNAME = #friendName})
-	</delete>
-
-	<select id="getUserByName" resultMap="userinfo">
-		SELECT "user".id, "user".username, "user".password, "user".enable,
-        "user".last_password_change, "user".enable FROM "user"
-         WHERE "user".username = #{username}
+    <select id="getPassword" resultType="String">
+		SELECT password FROM  [user] where username=#{username}
+	</select>
+    <select id="getRole" resultType="String">
+		SELECT authorities FROM  [user] where username=#{username}
 	</select>
 
-	<select id="findAll" resultType="com.bzh.floodserver.model.User">
-		select * from "user"
-	</select>
-
-	<select id="getUserInfoByName" resultType="com.bzh.floodserver.model.UserInfo">
-		select  USERNAME ,  NAME , HEAD_PORTRAIT , DESCRIPT , ADDRESS , MOTTO  from user_info inner join "user" on
-		user_info.USER_ID = "user".ID where "user".USERNAME = #{username}
-	</select>
-
-	<select id="recommendFriends" resultType="com.bzh.floodserver.model.UserInfo">
-        select  USERNAME , NAME , HEAD_PORTRAIT , DESCRIPT , ADDRESS , MOTTO  from user_info inner join "user" on
-        user_info.USER_ID = "user".ID ORDER BY  RAND() LIMIT 5
-    </select>
-
-	<select id="findAllNum" resultType="java.lang.Integer">
-		select count(*) from user
-	</select>
-
-	<select id="getIdByUserName" resultType="java.lang.Integer">
-		select ID from user where USERNAME = #{username}
-	</select>
-
-	<select id="getUserInfosByName" resultType="com.bzh.floodserver.model.UserInfo">
-		select USERNAME, NAME,HEAD_PORTRAIT,DESCRIPT,ADDRESS,MOTTO from user_info inner join "user" on
-		user_info.USER_ID = "user".ID where "user".USERNAME like #{username}
-	</select>
-
-	<select id="isExitFriend" resultType="java.lang.Integer">
-		select count(*) from friends where USER_ID = #{userId} and FRIEND_ID =#{friendId}
-	</select>
-
-	<select id="selectFriendByUsername" resultType="com.bzh.floodserver.model.FriendsInfo">
-		select  USERNAME ,  NAME , HEAD_PORTRAIT , DESCRIPT , ADDRESS , MOTTO ,  REMARK_NAME  as remarkName from
-		(select FRIEND_ID, REMARK_NAME from friends inner join "user" on "user".ID = friends.USER_ID  where "user".USERNAME = #{username} ) a inner join
-		(select  USER_ID ,  USERNAME ,  NAME , HEAD_PORTRAIT , DESCRIPT , ADDRESS , MOTTO  from user_info inner join "user" on
-		user_info.USER_ID = "user".ID) b on a.FRIEND_ID = b.USER_ID;
-	</select>
-	<select id="getloadPng" resultType="java.lang.String">
-		select  HEAD_PORTRAIT  from user_info inner join "user" on
-		user_info.USER_ID = "user".ID where "user".USERNAME = #{username}
-	</select>
-	<select id="getloadPngAll" resultType="java.lang.String">
-		select REMARK_NAME from friends where friends.USER_ID=(select id from user where  user .USERNAME=#{username})
-
-	</select>
-	<select id="getmessage" resultType="com.bzh.floodserver.model.Talk">
-    select m.id,u.username as sender,m.message,m.time from messages as m inner join  user  as u on m.sender_id=u.id where push=0  and RECEIVER_ID =(SELECT id from user WHERE  user .USERNAME=#{username}) order by time asc
-	</select>
-
-	<insert id="register">
-		INSERT INTO USER (  USERNAME ,  PASSWORD ,  EMAIL ,  Last_PASSWORD_CHANGE ,  ENABLE  )
-		VALUE ( #{username}, #{password}, #{email}, NOW(), 1 )
-	</insert>
-
-	<insert id="addFriends">
-		INSERT into friends ( user_id , friend_id , remark_name , delet_sign , pull_black )
-		value (#{userId}, #{friendId}, #{remarkName}, 0, 0)
-	</insert>
-
-	<insert id="addMessage">
-		INSERT into messages ( ID , SENDER_ID , RECEIVER_ID , message , time , read_sign , push )
-		values (#{id},(SELECT id from  user  where  user .USERNAME=#{sender}),
-		(SELECT id from  user  where  user .USERNAME=#{receiver}), #{message},current_timestamp(),0,#{push})
-	</insert>
-
-	<update id="updateUserInfo">
-		update user_info set NAME = #{name}, HEAD_PORTRAIT = #{headPortrait}, DESCRIPT = #{descript},
-		 ADDRESS = #{address}, MOTTO = #{motto}
-		where USER_ID = (select ID from user where USERNAME = #{username})
-	</update>
-
-	<update id="updateUserRole">
-		update user_role set ROLE_ID = #{role} where USER_ID = (select ID from user where USERNAME = #{username})
-	</update>
-
-	<update id="uploadpicture">
-    	update user_info SET HEAD_PORTRAIT=#{img} where user_info.USER_ID=(select id FROM user where "user".USERNAME=#{username})
-	</update>
-	<update id="upmespush">
-		UPDATE messages set push = 1 where id= #{id}
-	</update>
 
 </mapper>

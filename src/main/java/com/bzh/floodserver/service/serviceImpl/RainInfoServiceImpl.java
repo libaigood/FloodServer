@@ -2,9 +2,9 @@ package com.bzh.floodserver.service.serviceImpl;
 
 import com.bzh.floodserver.mapper.RainInfoDao;
 import com.bzh.floodserver.model.sjappfu.*;
-import com.bzh.floodserver.service.NoDataException;
 import com.bzh.floodserver.service.RainInfoService;
-import com.bzh.floodserver.service.SomeForRain;
+import com.bzh.floodserver.utils.NoDataException;
+import com.bzh.floodserver.utils.SomeForRain;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

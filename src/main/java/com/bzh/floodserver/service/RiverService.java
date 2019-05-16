@@ -1,7 +1,6 @@
 package com.bzh.floodserver.service;
 
 import com.bzh.floodserver.model.mapper.*;
-import org.apache.ibatis.annotations.Param;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -15,7 +14,7 @@ public interface RiverService {
      * @param stcd 站号
      * @return
      */
-    River riverSelect(String ymdhmA, String ymdhmB, String stcd );
+    River riverSelect(String ymdhmA, String ymdhmB, String stcd);
 
     /***
      * 获取水库水位站点信息
@@ -24,7 +23,7 @@ public interface RiverService {
      * @param ymdhmB 结束时间
      * @return
      */
-    Reservoir reservoirService(String stcd ,String ymdhmA,  String ymdhmB );
+    Reservoir reservoirService(String stcd, String ymdhmA, String ymdhmB);
     /**
      * 降雨量表格
      * @param tmstart 开始时间
@@ -54,7 +53,7 @@ public interface RiverService {
      * @param tmend 结束时间
      * @return
      */
-    List<Rainfall> rainfallselect(String stcd,String tmstart,String tmend) throws ParseException;
+    List<Rainfall> rainfallselect(String stcd, String tmstart, String tmend) throws ParseException;
 
     /**
      * 获取河道（时）信息
@@ -63,7 +62,7 @@ public interface RiverService {
      * @param ymdhmend 结束时间
      * @return
      */
-    List<Rivertime> selectRivertime(String stcd,String ymdhmstart,String ymdhmend);
+    List<Rivertime> selectRivertime(String stcd, String ymdhmstart, String ymdhmend);
 
     /**
      * 获取水库（时）信息
@@ -72,5 +71,5 @@ public interface RiverService {
      * @param tmend 结束时间
      * @return
      */
-    List<Reservoirtime> selectReservoirtime(String stcd,String tmstart,String tmend);
+    List<Reservoirtime> selectReservoirtime(String stcd, String tmstart, String tmend);
 }

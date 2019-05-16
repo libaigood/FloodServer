@@ -1,16 +1,15 @@
 package com.bzh.floodserver.controller;
 
-import java.util.Arrays;
-
-import javax.annotation.Resource;
-
 import com.bzh.floodserver.service.FloodAbstractService;
-import com.bzh.floodserver.service.NoDataException;
 import com.bzh.floodserver.utils.JsonResult;
+import com.bzh.floodserver.utils.NoDataException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import java.util.Arrays;
 
 /**
  * 汛情摘要

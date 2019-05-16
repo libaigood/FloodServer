@@ -1,4 +1,4 @@
-package com.bzh.floodserver.service;
+package com.bzh.floodserver.utils;
 
 public class NoDataException extends RuntimeException{
 	private static final long serialVersionUID = 3270575270485883914L;

@@ -1,7 +1,6 @@
 package com.bzh.floodserver.model.sjappfu;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 基础信息表ST_STBPRP_B

@@ -1,6 +1,5 @@
 package com.bzh.floodserver.model.mapper;
 
-import java.util.Date;
 import java.util.List;
 
 /**

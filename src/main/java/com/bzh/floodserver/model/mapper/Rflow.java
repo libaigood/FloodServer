@@ -6,9 +6,6 @@ public class Rflow {
     private String adnm;
     private double dyp;
 
-
-
-
     public Rflow() {
     }
 
