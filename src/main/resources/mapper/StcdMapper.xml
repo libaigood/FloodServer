@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
-		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 用户系统 -->
 <mapper namespace="com.bzh.floodserver.mapper.StcdDao">
-	<select id="getStcd" resultType="com.bzh.floodserver.model.Stcd">
+    <select id="getStcd" resultType="com.bzh.floodserver.model.Stcd">
 		SELECT STCD,STNM,LGTD,LTTD,STLC,STTP FROM ST_STBPRP_B
+	</select>
+
+    <insert id="addUserStcd"  >
+        INSERT into user_stcd(id,STCD) VALUES
+        <foreach item="item" index="index" collection="list">
+            <if test="index==list.size()">
+                (#{id},#{item})
+            </if>
+            <if test="index!=list.size()">
+                (#{id},#{item}),
+            </if>
+
+        </foreach>
+    </insert>
+
+
+
+
+    <select id="selectById" resultType="String">
+		SELECT stcd  FROM user_stcd where id=#{id}
 	</select>
 
 
