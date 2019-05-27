@@ -24,4 +24,9 @@ public class UserServiceImpl implements UserService {
     public String getRole(String userName) {
         return userMapper.getRole(userName);
     }
+
+    @Override
+    public Integer getUserId(String userName) {
+        return userMapper.getUserId(userName);
+    }
 }

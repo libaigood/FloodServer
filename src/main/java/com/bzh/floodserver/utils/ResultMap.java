@@ -32,9 +32,4 @@ public class ResultMap extends HashMap<String, Object> {
 		this.put("data", obj);
 		return this;
 	}
-
-	public ResultMap token(String token) {
-		this.put("X-Auth-Token", token);
-		return this;
-	}
 }

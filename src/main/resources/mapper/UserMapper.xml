@@ -10,5 +10,9 @@
 		SELECT authorities FROM  [user] where username=#{username}
 	</select>
 
+	<select id="getUserId" resultType="Integer">
+		SELECT id FROM  [user] where username=#{username}
+	</select>
+
 
 </mapper>

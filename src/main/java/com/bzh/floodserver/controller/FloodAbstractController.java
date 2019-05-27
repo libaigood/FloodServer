@@ -15,7 +15,7 @@ import java.util.Arrays;
  * 汛情摘要
  * */
 @Controller
-@RequestMapping("floodAbstract")
+@RequestMapping("server/floodAbstract")
 public class FloodAbstractController {
 	
 	@Resource

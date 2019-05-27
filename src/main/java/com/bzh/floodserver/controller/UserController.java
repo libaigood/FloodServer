@@ -1,22 +1,17 @@
 package com.bzh.floodserver.controller;
 
-import com.bzh.floodserver.model.user.UserStcd;
 import com.bzh.floodserver.service.StcdService;
 import com.bzh.floodserver.service.UserService;
 import com.bzh.floodserver.utils.ResultMap;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import com.bzh.floodserver.utils.Statuscode;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -25,13 +20,13 @@ import java.util.List;
  * @Version 1.0
  * @Description:
  */
+
 @RestController
 @RequestMapping("usercontroller")
 public class UserController {
     @Autowired
     private UserService userService;
-    @Autowired
-    private StcdService stcdService;
+
 
 
     /**
@@ -51,35 +46,29 @@ public class UserController {
         //根据权限，指定返回数据
         String role = userService.getRole(username);
         if ("user".equals(role) || "admin".equals(role)) {
-            return new ResultMap().success();
+            Integer userId=userService.getUserId(username);
+            return new ResultMap().success().data(userId);
         }
-        return new ResultMap().fail("405").message("权限错误！");
+        return new ResultMap().fail(Statuscode.permissionError);
     }
 
     /**
-     * 用户添加自己关注的站号
-     * @param id 用户的id
-     * @param list 站号的集合
-     * @return ResultMap中success或者fail是代码号，data是数据
+     * 没有权限
+     * @return
      */
-    @RequestMapping(value = "/addUserStcd")
-    public ResultMap addUserStcd(int id, List<Integer> list) {
-        int no = stcdService.addUserStcd(id, list);
-        if (no != 0) {
-            return new ResultMap().success().data("添加成功");
-        }
-        return new ResultMap().fail("405").data("添加失败");
+    @RequestMapping(value = "/notRole")
+    public ResultMap notRole() {
+        return new ResultMap().fail(Statuscode.permissionError);
     }
 
     /**
-     * 用户查询自己关注的站号
-     * @param id 用户id
-     * @return ResultMap中success或者fail是代码号，data是数据
+     * 没有登录
+     * @return
      */
-    @RequestMapping(value = "/selectById")
-    public ResultMap selectById(int id) {
-        List<String> userStcd = stcdService.selectById(id);
-        return new ResultMap().success().data(userStcd);
+    @RequestMapping(value = "/notLogin")
+    public ResultMap notLogin() {
+        return new ResultMap().fail(Statuscode.notLogin);
     }
+
 
 }

@@ -17,7 +17,7 @@ import java.util.List;
  * 雨情信息
  */
 @Controller
-@RequestMapping("rainInfo")
+@RequestMapping("server/rainInfo")
 public class RainInfoController {
 
 	@Resource

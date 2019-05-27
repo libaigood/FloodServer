@@ -23,4 +23,12 @@ public interface UserMapper {
      * @return
      */
     String getRole(String userName);
+
+    /**
+     *  根据用户名获取用戶id
+     * @param userName
+     * @return
+     */
+    Integer getUserId(String userName);
+
 }

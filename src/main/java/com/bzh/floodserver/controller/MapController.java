@@ -20,7 +20,7 @@ import java.util.List;
 
 //地图控制器
 @Controller
-@RequestMapping("mapController")
+@RequestMapping("server/mapController")
 public class MapController {
 
     private final RiverService riverService;
