@@ -21,15 +21,15 @@ import java.net.UnknownHostException;
 @Order(value = 1)
 public class StartWebSocket implements ApplicationRunner {
     @Autowired
-    private CustomWebSocke customWebSocke;
+    private WebSocketService webSocketService;
 
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        customWebSocke.start();
+        webSocketService.start();
         try {
             String ip = InetAddress.getLocalHost().getHostAddress();
-            int port = customWebSocke.getPort();
+            int port = webSocketService.getPort();
             System.out.println(String.format("服务已启动: %s:%d", ip, port));
         } catch (UnknownHostException e) {
             e.printStackTrace();

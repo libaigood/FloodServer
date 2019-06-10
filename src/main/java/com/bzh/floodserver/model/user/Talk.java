@@ -18,6 +18,9 @@ public class Talk {
 	public Talk() {
 	}
 
+	public Talk(Long talkID, String s, String username, String friendName, Date date, String imgtobyte) {
+	}
+
 	public Talk(Long id, String code, String sender, String receiver, int push, Date time, String message) {
 		this.id = id;
 		this.code = code;

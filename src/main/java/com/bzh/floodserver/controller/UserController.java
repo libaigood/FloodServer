@@ -1,6 +1,7 @@
 package com.bzh.floodserver.controller;
 
-import com.bzh.floodserver.service.StcdService;
+import com.bzh.floodserver.model.user.User;
+
 import com.bzh.floodserver.service.UserService;
 import com.bzh.floodserver.utils.ResultMap;
 import com.bzh.floodserver.utils.Statuscode;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: libai
@@ -46,8 +49,11 @@ public class UserController {
         //根据权限，指定返回数据
         String role = userService.getRole(username);
         if ("user".equals(role) || "admin".equals(role)) {
-            Integer userId=userService.getUserId(username);
-            return new ResultMap().success().data(userId);
+            User user = userService.getUserId(username);
+            Map map=new HashMap();
+            map.put("id",user.getId());
+            map.put("username",user.getUsername());
+            return new ResultMap().success().data(map);
         }
         return new ResultMap().fail(Statuscode.permissionError);
     }
