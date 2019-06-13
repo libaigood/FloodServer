@@ -10,6 +10,6 @@ public class Statuscode {
 
     public static final String success = "200";//200代表成功
     public static final String permissionError = "405";//405代表权限错误
-    public static final String notLogin = "110";//405代表没有登录
+    public static final String notLogin = "110";//110代表没有登录
 
 }

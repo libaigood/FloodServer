@@ -64,7 +64,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserInfo getUserInfoByName(String username) {
         UserInfo userInfo = userMapper.getUserInfoByName(username);
-        userInfo.setHeadportrait(CommonUtils.imgtobyte(userInfo.getHeadportrait()));
+        if (userInfo!=null){
+            userInfo.setHeadportrait(CommonUtils.imgtobyte(userInfo.getHeadportrait()));
+        }
         return userInfo;
     }
 
@@ -126,8 +128,9 @@ public class UserServiceImpl implements UserService {
         int userId = userMapper.getIdByUserName(username);
         int friendId = userMapper.getIdByUserName(friendName);
         int isExit = userMapper.isExitFriend(userId, friendId);
+        int id =userMapper.selectFriendsId()+1;
         if (isExit == 0) {
-            return userMapper.addFriends(userId, friendId, remarkName);
+            return userMapper.addFriends(id,userId, friendId, remarkName);
         } else {
             return 2;
         }

@@ -38,7 +38,7 @@ public class User implements LoginDetail, TokenDetail {
 
     @Override
     public String getId() {
-        return null;
+        return this.id;
     }
 
     @Override

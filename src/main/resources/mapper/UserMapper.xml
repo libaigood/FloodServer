@@ -10,103 +10,103 @@
 		SELECT authorities FROM  [user] where username=#{username}
 	</select>
 
-	<select id="getUserId" resultType="com.bzh.floodserver.model.user.User">
+    <select id="getUserId" resultType="com.bzh.floodserver.model.user.User">
 		SELECT * FROM  [user] where username=#{username}
 	</select>
 
 
-
-
-
-
-
-	<delete id="deleteFriend">
+    <delete id="deleteFriend">
 		delete from friends
 		where
-			USER_ID = (SELECT ID FROM user WHERE USERNAME = #{username})
+			USER_ID = (SELECT ID FROM [user] WHERE USERNAME = #{username})
 		and
-			FRIEND_ID = (SELECT ID FROM user WHERE USERNAME = #friendName})
+			FRIEND_ID = (SELECT ID FROM [user] WHERE USERNAME = #friendName})
 	</delete>
 
-	<select id="findAll" resultType="com.bzh.floodserver.model.user.User">
+    <select id="findAll" resultType="com.bzh.floodserver.model.user.User">
 		select * from "user"
 	</select>
 
-	<select id="getUserInfoByName" resultType="com.bzh.floodserver.model.user.UserInfo">
-		select  USERNAME ,  NAME , HEAD_PORTRAIT , DESCRIPT , ADDRESS , MOTTO  from user_info inner join "user" on
+    <select id="getUserInfoByName" resultType="com.bzh.floodserver.model.user.UserInfo">
+		select  USERNAME ,  [NAME] , HEAD_PORTRAIT , DESCRIPT , ADDRESS , MOTTO  from user_info inner join "user" on
 		user_info.USER_ID = "user".ID where "user".USERNAME = #{username}
 	</select>
 
-	<select id="recommendFriends" resultType="com.bzh.floodserver.model.user.UserInfo">
-        select  USERNAME , NAME , HEAD_PORTRAIT , DESCRIPT , ADDRESS , MOTTO  from user_info inner join "user" on
-        user_info.USER_ID = "user".ID ORDER BY  RAND() LIMIT 5
+    <select id="recommendFriends" resultType="com.bzh.floodserver.model.user.UserInfo">
+        select top(5)  USERNAME , [NAME ], HEAD_PORTRAIT , DESCRIPT , ADDRESS , MOTTO  from user_info right join "user" on
+        user_info.USER_ID = "user".ID ORDER BY  RAND()
     </select>
 
-	<select id="findAllNum" resultType="java.lang.Integer">
+    <select id="findAllNum" resultType="java.lang.Integer">
 		select count(*) from user
 	</select>
 
-	<select id="getIdByUserName" resultType="java.lang.Integer">
-		select ID from user where USERNAME = #{username}
+    <select id="getIdByUserName" resultType="java.lang.Integer">
+		select ID from [user] where USERNAME = #{username}
 	</select>
 
-	<select id="getUserInfosByName" resultType="com.bzh.floodserver.model.user.UserInfo">
-		select USERNAME, NAME,HEAD_PORTRAIT,DESCRIPT,ADDRESS,MOTTO from user_info inner join "user" on
+    <select id="getUserInfosByName" resultType="com.bzh.floodserver.model.user.UserInfo">
+		select USERNAME, [NAME],HEAD_PORTRAIT,DESCRIPT,ADDRESS,MOTTO from user_info inner join "user" on
 		user_info.USER_ID = "user".ID where "user".USERNAME like #{username}
 	</select>
 
-	<select id="isExitFriend" resultType="java.lang.Integer">
+    <select id="isExitFriend" resultType="java.lang.Integer">
 		select count(*) from friends where USER_ID = #{userId} and FRIEND_ID =#{friendId}
 	</select>
 
-	<select id="selectFriendByUsername" resultType="com.bzh.floodserver.model.user.FriendsInfo">
-		select  USERNAME ,  NAME , HEAD_PORTRAIT , DESCRIPT , ADDRESS , MOTTO ,  REMARK_NAME  as remarkName from
+    <select id="selectFriendByUsername" resultType="com.bzh.floodserver.model.user.FriendsInfo">
+		select  USERNAME ,  [NAME] , HEAD_PORTRAIT , DESCRIPT , ADDRESS , MOTTO ,  REMARK_NAME  as remarkName from
 		(select FRIEND_ID, REMARK_NAME from friends inner join "user" on "user".ID = friends.USER_ID  where "user".USERNAME = #{username} ) a inner join
-		(select  USER_ID ,  USERNAME ,  NAME , HEAD_PORTRAIT , DESCRIPT , ADDRESS , MOTTO  from user_info inner join "user" on
+		(select  USER_ID ,  USERNAME ,  [NAME] , HEAD_PORTRAIT , DESCRIPT , ADDRESS , MOTTO  from user_info inner join "user" on
 		user_info.USER_ID = "user".ID) b on a.FRIEND_ID = b.USER_ID;
 	</select>
-	<select id="getloadPng" resultType="java.lang.String">
+    <select id="getloadPng" resultType="java.lang.String">
 		select  HEAD_PORTRAIT  from user_info inner join "user" on
 		user_info.USER_ID = "user".ID where "user".USERNAME = #{username}
 	</select>
-	<select id="getloadPngAll" resultType="java.lang.String">
-		select REMARK_NAME from friends where friends.USER_ID=(select id from user where  user .USERNAME=#{username})
+    <select id="getloadPngAll" resultType="java.lang.String">
+		select REMARK_NAME from friends where friends.USER_ID=(select id from [user] where  [user] .USERNAME=#{username})
 
 	</select>
-	<select id="getmessage" resultType="com.bzh.floodserver.model.user.Talk">
-    select m.id,u.username as sender,m.message,m.time from messages as m inner join  user  as u on m.sender_id=u.id where push=0  and RECEIVER_ID =(SELECT id from user WHERE  user .USERNAME=#{username}) order by time asc
+    <select id="getmessage" resultType="com.bzh.floodserver.model.user.Talk">
+    select m.id,u.username as sender,m.message,m.time from messages as m inner join  [user]  as u on m.sender_id=u.id where push=0  and RECEIVER_ID =(SELECT id from user WHERE  user .USERNAME=#{username}) order by time asc
 	</select>
 
-	<insert id="register">
-		INSERT INTO USER (  USERNAME ,  PASSWORD ,  EMAIL ,  Last_PASSWORD_CHANGE ,  ENABLE  )
+    <insert id="register">
+		INSERT INTO [USER] (  USERNAME ,  PASSWORD ,  EMAIL ,  Last_PASSWORD_CHANGE ,  ENABLE  )
 		VALUE ( #{username}, #{password}, #{email}, NOW(), 1 )
 	</insert>
 
-	<insert id="addFriends">
-		INSERT into friends ( user_id , friend_id , remark_name , delet_sign , pull_black )
-		value (#{userId}, #{friendId}, #{remarkName}, 0, 0)
+    <insert id="addFriends">
+		INSERT into friends (id, user_id , friend_id , remark_name , delet_sign , pull_black )
+		values (#{id},#{userId}, #{friendId}, #{remarkName}, 0, 0)
 	</insert>
 
-	<insert id="addMessage">
+
+    <select id="selectFriendsId" resultType="integer">
+		SELECT top(1)id FROM  friends ORDER BY id desc
+	</select>
+
+    <insert id="addMessage">
 		INSERT into messages ( ID , SENDER_ID , RECEIVER_ID , message , time , read_sign , push )
-		values (#{id},(SELECT id from  user  where  user .USERNAME=#{sender}),
-		(SELECT id from  user  where  user .USERNAME=#{receiver}), #{message},current_timestamp(),0,#{push})
+		values (#{id},(SELECT id from  [user]  where  [user] .USERNAME=#{sender}),
+		(SELECT id from  user  where  [user] .USERNAME=#{receiver}), #{message},current_timestamp(),0,#{push})
 	</insert>
 
-	<update id="updateUserInfo">
-		update user_info set NAME = #{name}, HEAD_PORTRAIT = #{headPortrait}, DESCRIPT = #{descript},
+    <update id="updateUserInfo">
+		update user_info set [NAME] = #{name}, HEAD_PORTRAIT = #{headPortrait}, DESCRIPT = #{descript},
 		 ADDRESS = #{address}, MOTTO = #{motto}
 		where USER_ID = (select ID from user where USERNAME = #{username})
 	</update>
 
-	<update id="updateUserRole">
-		update user_role set ROLE_ID = #{role} where USER_ID = (select ID from user where USERNAME = #{username})
+    <update id="updateUserRole">
+		update user_role set ROLE_ID = #{role} where USER_ID = (select ID from [user] where USERNAME = #{username})
 	</update>
 
-	<update id="uploadpicture">
+    <update id="uploadpicture">
     	update user_info SET HEAD_PORTRAIT=#{img} where user_info.USER_ID=(select id FROM user where "user".USERNAME=#{username})
 	</update>
-	<update id="upmespush">
+    <update id="upmespush">
 		UPDATE messages set push = 1 where id= #{id}
 	</update>
 

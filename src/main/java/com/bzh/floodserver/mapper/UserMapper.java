@@ -111,7 +111,14 @@ public interface UserMapper {
      * @param remarkName
      * @return
      */
-    int addFriends(@Param("userId") int userId, @Param("friendId") int friendId, @Param("remarkName") String remarkName);
+    int addFriends(@Param("id") int id,@Param("userId") int userId, @Param("friendId") int friendId, @Param("remarkName") String remarkName);
+
+
+    /**
+     * 获取friends 表的id
+     */
+    int selectFriendsId();
+
 
     /**
      * 添加消息
