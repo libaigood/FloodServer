@@ -89,14 +89,14 @@
 
     <insert id="addMessage">
 		INSERT into messages ( ID , SENDER_ID , RECEIVER_ID , message , time , read_sign , push )
-		values (#{id},(SELECT id from  [user]  where  [user] .USERNAME=#{sender}),
-		(SELECT id from  user  where  [user] .USERNAME=#{receiver}), #{message},current_timestamp(),0,#{push})
+		values (#{id},(SELECT id from  [user]  where  [user].USERNAME=#{sender}),
+		(SELECT id from  [user]  where  [user].USERNAME=#{receiver}), #{message},current_timestamp,0,#{push})
 	</insert>
 
     <update id="updateUserInfo">
 		update user_info set [NAME] = #{name}, HEAD_PORTRAIT = #{headPortrait}, DESCRIPT = #{descript},
 		 ADDRESS = #{address}, MOTTO = #{motto}
-		where USER_ID = (select ID from user where USERNAME = #{username})
+		where USER_ID = (select ID from [user] where USERNAME = #{username})
 	</update>
 
     <update id="updateUserRole">
@@ -104,7 +104,7 @@
 	</update>
 
     <update id="uploadpicture">
-    	update user_info SET HEAD_PORTRAIT=#{img} where user_info.USER_ID=(select id FROM user where "user".USERNAME=#{username})
+    	update user_info SET HEAD_PORTRAIT=#{img} where user_info.USER_ID=(select id FROM [user] where "user".USERNAME=#{username})
 	</update>
     <update id="upmespush">
 		UPDATE messages set push = 1 where id= #{id}

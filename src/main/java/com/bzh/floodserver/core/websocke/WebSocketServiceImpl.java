@@ -90,7 +90,7 @@ public class WebSocketServiceImpl extends WebSocketServer implements WebSocketSe
 	@Override
 	public void onError(WebSocket webSocket, Exception e) {
 		if (null != webSocket) {
-			webSocket.close(0);
+			webSocket.close();
 		}
 		e.printStackTrace();
 	}
