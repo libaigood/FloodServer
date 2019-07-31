@@ -32,13 +32,6 @@ public class ChatController {
 
     private final UserService userService;
 
-
-
-
-
-
-
-
     @Autowired
     public ChatController(UserService userService) {
         this.userService = userService;
